@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .student-box {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px auto;
+            width: 50%;
+            display: block;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        #searchBar {
+            margin-bottom: 10px;
+            padding: 10px;
+            width: 60%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .attendance-btn {
+            margin: 5px;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .present-btn {
+            background-color: #28a745;
+            color: white;
+        }
+        .absent-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h2>Students</h2>
+    <input type="text" id="searchBar" placeholder="Search students..." onkeyup="filterStudents()">
+    <div id="students"></div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const classId = urlParams.get('class');
+
+        const classData = {
+            CSE: [
+                { id: 1, name: "John Doe", profile: "#" },
+                { id: 2, name: "Jane Smith", profile: "#" },
+                { id: 3, name: "Mike Johnson", profile: "#" }
+            ]
+        };
+
+        const studentsDiv = document.getElementById('students');
+
+        function loadStudents() {
+            studentsDiv.innerHTML = "";
+            if (classId && classData[classId.toUpperCase()]) {
+                classData[classId.toUpperCase()].forEach(student => {
+                    const studentDiv = document.createElement("div");
+                    studentDiv.classList.add("student-box");
+                    studentDiv.innerHTML = `
+                        <a href="${student.profile}" target="_blank">${student.name}</a>
+                        <button class="attendance-btn present-btn" onclick="markAttendance('${student.name}', 'Present')">Present</button>
+                        <button class="attendance-btn absent-btn" onclick="markAttendance('${student.name}', 'Absent')">Absent</button>
+                    `;
+                    studentsDiv.appendChild(studentDiv);
+                });
+            } else {
+                studentsDiv.innerHTML = "<p>No students found for this department.</p>";
+            }
+        }
+
+        function filterStudents() {
+            const searchValue = document.getElementById("searchBar").value.toLowerCase();
+            document.querySelectorAll(".student-box").forEach(studentBox => {
+                const name = studentBox.querySelector("a").textContent.toLowerCase();
+                studentBox.style.display = name.includes(searchValue) ? "block" : "none";
+            });
+        }
+
+        function markAttendance(studentName, status) {
+            alert(`${studentName} marked as ${status}`);
+        }
+
+        loadStudents();
+    </script>
+</body>
+</html>

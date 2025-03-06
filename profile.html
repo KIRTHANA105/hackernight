@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<head>
+    <title>Profile</title>
+    <style>
+        body{
+            animation: gradientAnimation 15s infinite alternate ease;
+            display:flex;
+            margin-left:100px;
+            margin-top: 50px;
+        }
+        .profile-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            height:250px;
+        }
+        .details{
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 500px;
+            height: 500px;
+        }
+        .avatar {
+            display:flex;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes gradientAnimation {
+            0% { background: linear-gradient(135deg, #007bff, #68bc91); }
+            25% { background: linear-gradient(135deg, #00c6ff, #07603c); }
+            50% { background: linear-gradient(135deg, #040d82, #17b771); }
+            75% { background: linear-gradient(135deg, #4d98e3, #66e8dd); }
+            100% { background: linear-gradient(135deg, #007bff, #6fde9f); }
+        }
+    </style>
+</head> 
+<body>
+    <script>
+        function updateProfilePic(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById("profile-pic").src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+    <div class="profile-card">
+        <img src="image2.png" class="avatar" id="profile-pic">
+        <label>
+            <input type="file" id="profile-pic" accept="image/*" class="hidden" onchange="updateProfilePic(event)">
+        </label> 
+        <p> Name:</p>
+        <p>Dept.:</p>
+        <p>Reg.NO:</p>
+    </div>
+    <div class="details">
+        <p>
+            Current CGPA:
+        </p>
+        <p>Contact details:</p>
+    </div>
+</body>

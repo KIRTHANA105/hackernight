@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #007bff, #00c6ff);
+        }
+        .login-container {
+            width: 350px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .input-field {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .login-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: blue;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form onsubmit="event.preventDefault(); go_to();">
+            <input type="email" placeholder="Email" class="input-field" required>
+            <input type="password" placeholder="Password" class="input-field" required>
+            <label>Choose role:</label>
+            <input type="radio" name="role" value="student"> Student
+            <input type="radio" name="role" value="teacher"> Teacher
+            <button type="submit" class="login-btn">Login</button>
+        </form>
+    </div>
+    <script>
+        function go_to() {
+            let roles = document.getElementsByName("role");
+            let selectedRole = "";
+            for (let i = 0; i < roles.length; i++) {
+                if (roles[i].checked) {
+                    selectedRole = roles[i].value;
+                    break;
+                }
+            }
+            if (selectedRole === "student") {
+                window.location.href = "student_dashboard.html";
+            } else if (selectedRole === "teacher") {
+                window.location.href = "teacher-dashboard.html";
+            } else {
+                alert("Please select a role before logging in.");
+            }
+        }
+    </script>
+</body>
+</html>

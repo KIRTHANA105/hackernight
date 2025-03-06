@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <title>PROFILE</title>
+    </head>
+
+    <body>
+        <center><img src="" alt="Profile Image" width="200px" height="200px"></center>
+        <br>
+        <p id="profile"></p>
+
+        <script>
+            let data = [
+                {
+                    name: "John Doe",
+                    dept: "CSE",
+                    post: "Assistant Professor"
+                }
+            ]
+            
+            let parent = document.getElementById("profile");
+
+            async function profile() {
+                data.forEach(teacher => {
+                    let child = document.createElement("p");
+                    child.innerHTML = `<b>Name: </b>${teacher.name}<br><b>Department: </b>${teacher.dept}<br><b>Post: </b>${teacher.post}`;
+                    parent.appendChild(child);
+                });
+            }
+
+            profile();
+        </script>
+    </body>
+</html>

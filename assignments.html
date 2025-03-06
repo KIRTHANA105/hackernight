@@ -1,0 +1,109 @@
+<html>
+    <head>
+        <title>DASHBOARD</title>
+        <style>
+            body{
+                background:linear-gradient(135deg, #007bff, #68bc91);
+                font-family: Arial, sans-serif;
+                text-align: center;
+            }
+            #assignments{
+                display:flex;
+                width:fit-content;
+                height:fit-content;
+                background-color: rgba(40, 37, 37, 0.1);
+                margin-left:350px;
+                margin-top:50px
+            }
+            #assignments:hover{
+                transform: scale(1.05);
+            }
+            button {
+                display: inline-block;
+                padding: 14px 28px;
+                background: white;
+                color: #007bff;
+                font-size: 20px;
+                text-decoration: none;
+                border-radius: 30px;
+                transition: 0.3s;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            }
+            #stop-speech{
+            display:none
+            }
+            #start-speech{
+                display:inline;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1> Assignments</h1>
+        <button id="start-speech" onclick="textTospeech()">Start</button>
+        <button id="stop-speech" onclick="stopspeech()">Stop</button>
+        <button onclick="postAssgn()">Post Assignment</button><br>
+        <div id="assignments">
+            <div id="show"></div>
+        </div>
+
+        <script>
+            function postAssgn() {
+                let name = prompt("Enter Assignment Heading: ");
+                let message = prompt("Enter subject of assignments or message: ");
+                let link = prompt("Enter drive link of relevant document: ");
+                
+                let child = document.createElement("div");
+                child.classList.add("assignment");
+
+                child.innerHTML = `
+                    <h3>${name}</h3>
+                    <p>${message}</p>
+                    <a href="${link}" target="_blank">View Document</a>
+                `;
+
+                document.getElementById("show").appendChild(child);
+            }
+
+            function displayAssgn() {
+                let element = document.getElementById("show");
+                let data = [{
+                    name: "Maths Unit 1 Assignment",
+                    message: "Complete the following questions and submit the hard copy by 14 March 2025.",
+                    url: "https://biueo541gbc82jn9fnc.pdf"
+                }];
+
+                data.forEach(assignment => {
+                    let assignmentDiv = document.createElement("div");
+                    assignmentDiv.classList.add("assignment");
+
+                    assignmentDiv.innerHTML = `
+                        <h3>${assignment.name}</h3>
+                        <p>${assignment.message}</p>
+                        <a href="${assignment.url}" target="_blank">View Document</a>
+                    `;
+                    
+                    element.appendChild(assignmentDiv);
+                });
+            }
+
+            displayAssgn();
+            function textTospeech(){
+                let text=document.body.innerText;
+                let speech= new SpeechSynthesisUtterance();
+                document.getElementById("start-speech").style.display="none";
+                document.getElementById("stop-speech").style.display="inline";
+                speech.text=text;
+                speech.volume=1;
+                speech.rate=1;
+                speech.pitch=1;
+                window.speechSynthesis.speak(speech);
+            }
+        function stopspeech() {
+            window.speechSynthesis.cancel();
+            document.getElementById("start-speech").style.display = "inline";
+            document.getElementById("stop-speech").style.display = "none";
+        }
+        </script>
+    </body>
+</html>
